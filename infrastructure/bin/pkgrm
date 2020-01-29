@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# installer - https://apple.stackexchange.com/a/72227
+# pkgutils - https://superuser.com/a/525395
+#
+
+set -eu
+
+dry_run=false
+
+if [ "${1:-X}" == "-n" ]; then
+  dry_run=true
+  shift
+fi
+
+RM="rm -f"
+RMDIR="rmdir"
+
+if [ "${dry_run}" != "false" ] ; then
+  echo "Dry run..."
+  RM="echo ${RM}"
+  RMDIR="echo ${RMDIR}"
+fi
+
+extract_prefix() {
+  awk 'function trim(s) {
+  gsub(/^[ \t]*|[ \t]*$/, "", s);
+  return s;
+}
+BEGIN {
+  FS = ":";
+  volume = "/";
+  location = "";
+}
+$1 == "volume" {
+  volume = trim($2);
+}
+$1 == "location" {
+  location = trim($2);
+}
+END {
+  printf("%s%s\n", volume, location == "/" ? "" : location);
+}'
+}
+
+pkgrm_impl() {
+  prefix=$(pkgutil --pkg-info "${1}" | extract_prefix)
+  
+  echo "Uninstalling ${arg} from ${prefix}"
+  pkgutil --files "${1}"
+  pkgutil --only-files --files "${1}" | xargs -I % ${RM} -- "${prefix}/%"
+  pkgutil --only-dirs --files "${1}" | tail -r | xargs -I % ${RMDIR} "${prefix}/%"
+  if [ "${dry_run}" != "false" ] ; then
+    echo pkgutil --forget "${1}"
+  else
+    pkgutil --forget "${1}"
+  fi
+}
+
+for arg; do
+  pkgrm_impl "${arg}"
+done
