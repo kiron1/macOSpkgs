@@ -33,6 +33,4 @@ list: composer-${VERSION}.pkg
 
 uninstall:
 	@echo UNINSTALL
-	pkgutil --files "${PKG_NAME}"
-	pkgutil --only-files --files "${PKG_NAME}" | xargs -I % rm -f -- /%
-	pkgutil --forget "${PKG_NAME}"
+	@{TOP}/../../infrastructure/bin/pkgrm ${PKG_NAME}

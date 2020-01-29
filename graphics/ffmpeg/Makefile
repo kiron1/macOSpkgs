@@ -10,6 +10,8 @@ PKG_NAME:=org.ffmpeg.FFmpeg
 ROOT:=_work
 DEST:=${ROOT}/usr/local
 
+TOP:=${CURDIR}/../..
+
 ffmpeg-${VERSION}.pkg: ${DEST}/bin/ffmpeg
 	@echo PKGBUILD $@
 	@pkgbuild --root ${ROOT} --identifier ${PKG_NAME} --version ${VERSION} --ownership recommended "$@"
@@ -38,6 +40,4 @@ list: ffmpeg-${VERSION}.pkg
 
 uninstall:
 	@echo UNINSTALL
-	pkgutil --files "${PKG_NAME}"
-	pkgutil --only-files --files "${PKG_NAME}" | xargs -I % rm -f -- /%
-	pkgutil --forget "${PKG_NAME}"
+	@{TOP}/../../infrastructure/bin/pkgrm ${PKG_NAME}
