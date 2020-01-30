@@ -1,21 +1,20 @@
 #
-# https://github.com/jgm/pandoc/blob/master/macos/make_macos_package.sh
-# https://vincent.bernat.ch/en/blog/2013-autoconf-osx-packaging
-# https://stackoverflow.com/a/11487658
+# devel / llvm
 #
 
 VERSION:=9.0.1
+SRC_URI:=https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz
 SHASUM:=693e7c2d2fcd005f0d8198ea0174ae30ec78bb7c
-PKG_NAME:=org.llvm.ClangLLVM
+PKGID:=org.llvm.ClangLLVM
+PORT_NAME:=clang+llvm
 
-PREFIX?=/usr/local
+TOP:=$(realpath ${CURDIR}/../..)
 
-ROOT:=_work
+include ${TOP}/infrastructure/mk/vars.mk
 
-
-clang+llvm-${VERSION}-x86_64-apple-darwin.pkg: ${ROOT}/bin/llvm-config
+${PKG_FILE}: ${ROOT}/bin/llvm-config
 	@echo PKGBUILD $@
-	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PKG_NAME} --version ${VERSION} --ownership recommended "$@"
+	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PKGID} --version ${VERSION} --ownership recommended "$@"
 
 ${ROOT}/bin/llvm-config: clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz
 	@mkdir -p "${ROOT}"
@@ -23,19 +22,6 @@ ${ROOT}/bin/llvm-config: clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz
 	@tar -xzvf "$^" -C "${ROOT}" --strip-components 1
 	@touch "$@"
 
-clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz:
-	@echo FETCH $@
-	@curl -OL# https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz
-	@printf "%s  %s" "${SHASUM}" $@ | shasum -c -
+$(eval $(call http_file, clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz, ${SRC_URI}, ${SHASUM}))
 
-install: clang+llvm-${VERSION}-x86_64-apple-darwin.pkg
-	@echo INSTALL $^
-	@installer -package "$^" -target /
-
-list: clang+llvm-${VERSION}-x86_64-apple-darwin.pkg
-	@echo LIST BOM $^
-	@lsbom $$(pkgutil --bom $^)
-
-uninstall:
-	@echo UNINSTALL
-	@{TOP}/../../infrastructure/bin/pkgrm ${PKG_NAME}
+include ${TOP}/infrastructure/mk/macos.port.mk
