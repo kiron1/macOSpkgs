@@ -1,22 +1,16 @@
 #
-# installer - https://apple.stackexchange.com/a/72227
-# pkgutils - https://superuser.com/a/525395
+# textproc / pandoc
 #
 
 VERSION:=2.9.1.1
+SRC_URI:=https://github.com/jgm/pandoc/releases/download/${VERSION}/pandoc-${VERSION}-macOS.pkg
 SHASUM:=e3ab1b31e9c79e9f6ea7edb0b901d707ff9ce030
 PKG_NAME:=net.johnmacfarlane.pandoc
 
+TOP:=$(realpath ${CURDIR}/../..)
 
-pandoc-${VERSION}-macOS.pkg:
-	@echo FETCH $@
-	@curl -OL# https://github.com/jgm/pandoc/releases/download/${VERSION}/pandoc-${VERSION}-macOS.pkg
-	@printf "%s  %s" "${SHASUM}" $@ | shasum -c -
+include ${TOP}/infrastructure/mk/vars.mk
 
-install: pandoc-${VERSION}-macOS.pkg
-	@echo INSTALL
-	installer -package $^ -target /
+$(eval $(call http_file, ${PKG_FILE}, ${SRC_URI}, ${SHASUM}))
 
-uninstall:
-	@echo UNINSTALL
-	@{TOP}/../../infrastructure/bin/pkgrm ${PKG_NAME}
+include ${TOP}/infrastructure/mk/macos.port.mk
