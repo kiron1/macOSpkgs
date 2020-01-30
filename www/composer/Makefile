@@ -1,36 +1,20 @@
 #
-#
+# www / composer
 #
 
 VERSION:=1.9.2
 SRC_URI:=https://getcomposer.org/download/${VERSION}/composer.phar
 SHASUM:=b8e89b3e9a661792adc32e8bbe0b322248527d57
-PKG_NAME:=org.getcomposer.Composer
+PKGID:=org.getcomposer.Composer
 
-ROOT:=_work
-DEST:=${ROOT}/usr/local
+TOP:=$(realpath ${CURDIR}/../..)
 
-composer-${VERSION}.pkg: ${DEST}/bin/composer
+include ${TOP}/infrastructure/mk/vars.mk
+
+${PKG_NAME}: ${ROOT}/bin/composer
 	@echo PKGBUILD $@
-	@pkgbuild --root ${ROOT} --identifier ${PKG_NAME} --version ${VERSION} --ownership recommended "$@"
+	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PKGID} --version ${VERSION} --ownership recommended "$@"
 
-${DEST}/bin/composer: composer.phar
-	@install -d "$(dir $@)"
-	@install -c "$^" "$@"
+$(eval $(call http_file, ${ROOT}/bin/composer.phar, ${SRC_URI}, ${SHASUM}))
 
-composer.phar:
-	@echo FETCH $@
-	@curl -OL# ${SRC_URI}
-	@printf "%s  %s" "${SHASUM}" $@ | shasum -c -
-
-install: composer-${VERSION}.pkg
-	@echo INSTALL $^
-	@installer -package "$^" -target /
-
-list: composer-${VERSION}.pkg
-	@echo LIST BOM $^
-	@lsbom $$(pkgutil --bom $^)
-
-uninstall:
-	@echo UNINSTALL
-	@{TOP}/../../infrastructure/bin/pkgrm ${PKG_NAME}
+include ${TOP}/infrastructure/mk/macos.port.mk
