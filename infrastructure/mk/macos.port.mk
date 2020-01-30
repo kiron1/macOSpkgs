@@ -1,4 +1,7 @@
 #
+# installer - https://apple.stackexchange.com/a/72227
+# pkgutils - https://superuser.com/a/525395
+#
 # https://github.com/jgm/pandoc/blob/master/macos/make_macos_package.sh
 # https://vincent.bernat.ch/en/blog/2013-autoconf-osx-packaging
 # https://stackoverflow.com/a/11487658
