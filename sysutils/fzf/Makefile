@@ -13,7 +13,7 @@ include ${TOP}/infrastructure/mk/vars.mk
 
 ${PKG_FILE}: ${ROOT}/bin/fzf
 	@echo PKGBUILD $@
-	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PORT_NAME} --version ${VERSION} --ownership recommended "$@"
+	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PKGID} --version ${VERSION} --ownership recommended "$@"
 
 ${ROOT}/bin/fzf: fzf-${VERSION}-darwin_amd64.tgz
 	@echo UNTAR $^
