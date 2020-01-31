@@ -10,6 +10,11 @@ PREFIX?=/usr/local
 
 ROOT:=_work
 
+# See https://www.gnu.org/software/make/manual/html_node/Command-Variables.html#Command-Variables
+INSTALL?=install
+INSTALL_PROGRAM?=${INSTALL}
+INSTALL_DATA?=${INSTALL} -m 644
+
 # Function:
 #   http_file - Generate a target to download a file.
 # Arguments:

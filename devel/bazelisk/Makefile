@@ -15,6 +15,10 @@ bazelisk-${VERSION}-x86_64-apple-darwin.pkg: ${ROOT}/bin/bazel
 	@echo PKGBUILD $@
 	@pkgbuild --root ${ROOT} --install-location ${PREFIX} --identifier ${PKGID} --version ${VERSION} --ownership recommended "$@"
 
-$(eval $(call http_file, ${ROOT}/bin/bazel, ${SRC_URI}, ${SHASUM}))
+${ROOT}/bin/bazel: bazelisk-darwin-amd64
+	@${INSTALL} -d $(dir $@)
+	@${INSTALL_PROGRAM} $< "$@"
+
+$(eval $(call http_file, bazelisk-darwin-amd64, ${SRC_URI}, ${SHASUM}))
 
 include ${TOP}/infrastructure/mk/macos.port.mk
