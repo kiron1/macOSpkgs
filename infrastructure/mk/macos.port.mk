@@ -31,5 +31,5 @@ bom: ${PORT_NAME}-${VERSION}-x86_64-apple-darwin.pkg
 ifneq ($(strip ${PKGID}),)
 uninstall:
 	@echo UNINSTALL
-	@{TOP}/infrastructure/bin/pkgrm ${PKGID}
+	@${TOP}/infrastructure/bin/pkgrm ${PKGID}
 endif
