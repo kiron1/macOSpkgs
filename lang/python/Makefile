@@ -2,9 +2,9 @@
 # lang / python
 #
 #
-VERSION:=3.8.1
+VERSION:=3.8.6
 SRC_URI:=https://www.python.org/ftp/python/${VERSION}/python-${VERSION}-macosx10.9.pkg
-SHASUM:=d1c3f984b36d6043798becdbf68ec03dc89c4acd
+SHASUM:=ef781df41a0cad0f668165d5335848cbf029904e
 PKGID:=org.python.Python.PythonUnixTools-3.8
 PKGID+=org.python.Python.PythonApplications-3.8
 PKGID+=org.python.Python.PythonDocumentation-3.8
