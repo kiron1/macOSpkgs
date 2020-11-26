@@ -2,9 +2,9 @@
 # textproc / pandoc
 #
 
-VERSION:=2.9.1.1
+VERSION:=2.11.2
 SRC_URI:=https://github.com/jgm/pandoc/releases/download/${VERSION}/pandoc-${VERSION}-macOS.pkg
-SHASUM:=e3ab1b31e9c79e9f6ea7edb0b901d707ff9ce030
+SHASUM:=5ef3284f6e23b0081d6cf2a76818ee5157582916
 PKG_NAME:=net.johnmacfarlane.pandoc
 
 TOP:=$(realpath ${CURDIR}/../..)
