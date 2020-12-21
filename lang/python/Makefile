@@ -2,13 +2,13 @@
 # lang / python
 #
 #
-VERSION:=3.8.6
-SRC_URI:=https://www.python.org/ftp/python/${VERSION}/python-${VERSION}-macosx10.9.pkg
-SHASUM:=ef781df41a0cad0f668165d5335848cbf029904e
-PKGID:=org.python.Python.PythonUnixTools-3.8
-PKGID+=org.python.Python.PythonApplications-3.8
-PKGID+=org.python.Python.PythonDocumentation-3.8
-PKGID+=org.python.Python.PythonFramework-3.8
+VERSION:=3.9.1
+SRC_URI:=https://www.python.org/ftp/python/${VERSION}/python-${VERSION}-macos11.0.pkg
+SHASUM:=265a7535bceb28bd68de017364edb4a6f6c0fbfb
+PKGID:=org.python.Python.PythonUnixTools-3.9
+PKGID+=org.python.Python.PythonApplications-3.9
+PKGID+=org.python.Python.PythonDocumentation-3.9
+PKGID+=org.python.Python.PythonFramework-3.9
 
 TOP:=$(realpath ${CURDIR}/../..)
 
