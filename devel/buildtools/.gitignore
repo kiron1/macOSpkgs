@@ -1,0 +1,5 @@
+_work/
+buildtools-*-x86_64-apple-darwin.pkg
+buildifier*
+buildozer*
+unused_deps*
