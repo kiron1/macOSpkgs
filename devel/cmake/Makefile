@@ -12,6 +12,8 @@ TOP:=$(realpath ${CURDIR}/../..)
 
 include ${TOP}/infrastructure/mk/vars.mk
 
+all: ${ROOT}/CMake.app/Contents/bin/cmake
+
 install:
 	cp -a "${ROOT}/CMake.app" "${DESTDIR}/${PREFIX}/"
 
