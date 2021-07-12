@@ -2,9 +2,9 @@
 # textproc / pandoc
 #
 
-VERSION:=0.4.4
+VERSION:=0.5.0
 SRC_URI:=https://github.com/neovim/neovim/releases/download/v${VERSION}/nvim-macos.tar.gz
-SHASUM:=c10b2ee9c305787dc53854e6c26d8cdd21191ecf26f3a374ef92a8020a3737ba
+SHASUM:=6bcfa5192c9460c946e853dbd1a0baf659df5de184436144147711d1bceedeee
 PKGID:=com.github.neovim.NeoVIm
 
 TOP:=$(realpath ${CURDIR}/../..)
