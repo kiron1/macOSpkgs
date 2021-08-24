@@ -15,11 +15,13 @@ fi
 
 RM="rm -f"
 RMDIR="rmdir"
+FORGET="pkgutil --forget"
 
 if [ "${dry_run}" != "false" ] ; then
   echo "Dry run..."
   RM="echo ${RM}"
   RMDIR="echo ${RMDIR}"
+  FORGET="echo ${FORGET}"
 fi
 
 extract_prefix() {
@@ -45,16 +47,12 @@ END {
 
 pkgrm_impl() {
   prefix=$(pkgutil --pkg-info "${1}" | extract_prefix)
-  
+
   echo "Uninstalling ${arg} from ${prefix}"
   pkgutil --files "${1}"
   pkgutil --only-files --files "${1}" | xargs -I % ${RM} -- "${prefix}/%"
   pkgutil --only-dirs --files "${1}" | tail -r | xargs -I % ${RMDIR} "${prefix}/%"
-  if [ "${dry_run}" != "false" ] ; then
-    echo pkgutil --forget "${1}"
-  else
-    pkgutil --forget "${1}"
-  fi
+  ${FORGET} "${1}"
 }
 
 for arg; do
