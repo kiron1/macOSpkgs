@@ -2,9 +2,9 @@
 # devel / llvm
 #
 
-VERSION:=11.0.0
+VERSION:=15.0.2
 SRC_URI:=https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/clang+llvm-${VERSION}-x86_64-apple-darwin.tar.xz
-SHASUM:=ee67d063ae1d8dbfc29aae94e110e823ac203926
+SHASUM:=a37ec6204f555605fa11e9c0e139a251402590ead6e227fc72da193e03883882
 PKGID:=org.llvm.ClangLLVM
 PORT_NAME:=clang+llvm
 
